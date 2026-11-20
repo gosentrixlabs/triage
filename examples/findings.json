@@ -1,0 +1,97 @@
+{
+  "schema_version": "1",
+  "source": "example-scan",
+  "items": [
+    {
+      "source_id": "SCA-0001",
+      "title": "Log4Shell remote code execution in log4j-core 2.14.1",
+      "severity": "critical",
+      "rule": "dependency-vulnerability",
+      "location": "payments-api/pom.xml",
+      "cves": ["CVE-2021-44228"],
+      "asset": "payments-api",
+      "exposure": "internet",
+      "asset_criticality": "high",
+      "known_exploited": true,
+      "description": "log4j-core 2.14.1 evaluates JNDI lookups in logged strings, which lets an attacker who controls a logged value load remote code.\nUpgrade to 2.17.1 or later.",
+      "metadata": {
+        "package": "org.apache.logging.log4j:log4j-core",
+        "installed_version": "2.14.1",
+        "fixed_version": "2.17.1"
+      }
+    },
+    {
+      "source_id": "SAST-0142",
+      "title": "SQL injection in order search",
+      "severity": "high",
+      "rule": "CWE-89",
+      "location": "payments-api/src/orders/search.go:88",
+      "asset": "payments-api",
+      "exposure": "internet",
+      "asset_criticality": "high",
+      "description": "The q query parameter is concatenated into a SQL statement without parameterization."
+    },
+    {
+      "source_id": "SAST-0143",
+      "title": "Tainted query parameter reaches database call",
+      "severity": "medium",
+      "rule": "CWE-20",
+      "location": "payments-api/src/orders/search.go:91",
+      "asset": "payments-api",
+      "exposure": "internet",
+      "asset_criticality": "high"
+    },
+    {
+      "source_id": "SCA-0007",
+      "title": "Spring4Shell remote code execution in spring-beans 5.3.17",
+      "severity": "critical",
+      "rule": "dependency-vulnerability",
+      "location": "reporting-service/build.gradle",
+      "cves": ["CVE-2022-22965"],
+      "asset": "reporting-service",
+      "exposure": "internal",
+      "asset_criticality": "medium",
+      "known_exploited": true
+    },
+    {
+      "source_id": "SECRETS-0003",
+      "title": "Hard-coded database password in worker configuration",
+      "severity": "high",
+      "rule": "CWE-798",
+      "location": "batch-worker/config/settings.yaml:14",
+      "asset": "batch-worker",
+      "exposure": "internal",
+      "asset_criticality": "medium"
+    },
+    {
+      "source_id": "CONFIG-0021",
+      "title": "TLS 1.0 still enabled on public load balancer",
+      "severity": "medium",
+      "rule": "weak-tls",
+      "location": "infra/load-balancer.tf:42",
+      "asset": "web-frontend",
+      "exposure": "internet"
+    },
+    {
+      "source_id": "SAST-0201",
+      "title": "Stack traces returned in error responses",
+      "severity": "low",
+      "rule": "CWE-209",
+      "location": "reporting-service/src/errors.py:31",
+      "asset": "reporting-service",
+      "exposure": "internal",
+      "asset_criticality": "low",
+      "known_exploited": false
+    },
+    {
+      "source_id": "CONFIG-0034",
+      "title": "Debug endpoint enabled in offline batch environment",
+      "severity": "medium",
+      "rule": "debug-enabled",
+      "location": "batch-worker/config/app.yaml:3",
+      "asset": "batch-worker",
+      "exposure": "isolated",
+      "asset_criticality": "low"
+    }
+  ]
+}

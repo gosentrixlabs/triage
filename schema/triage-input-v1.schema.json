@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/gosentrixlabs/triage/main/schema/triage-input-v1.schema.json",
+  "title": "triage input, schema version 1",
+  "description": "Findings for the triage command-line tool. See docs/input-format.md. The tool also accepts the enumerated values in any letter case; the schema lists the canonical lowercase form.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "items"],
+  "properties": {
+    "schema_version": {
+      "description": "Version of this format.",
+      "const": "1"
+    },
+    "source": {
+      "description": "Name of the tool or process that produced the findings. Used, with source_id, to recognize the same finding across imports.",
+      "type": "string"
+    },
+    "items": {
+      "description": "The findings to triage.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/item" }
+    }
+  },
+  "$defs": {
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "severity"],
+      "properties": {
+        "source_id": {
+          "description": "Stable ID for this finding in the source tool. Must be unique within the file.",
+          "type": "string"
+        },
+        "title": {
+          "description": "Short description of the finding.",
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "severity": {
+          "description": "Severity reported by the source.",
+          "enum": ["critical", "high", "medium", "low", "info"]
+        },
+        "description": {
+          "description": "Longer description. May contain line breaks.",
+          "type": "string"
+        },
+        "location": {
+          "description": "Where the finding is, in any form (file and line, URL, resource name).",
+          "type": "string"
+        },
+        "rule": {
+          "description": "Rule, check or weakness ID that produced the finding, such as CWE-89.",
+          "type": "string"
+        },
+        "cves": {
+          "description": "CVE IDs the finding relates to.",
+          "type": "array",
+          "items": { "type": "string", "pattern": "^CVE-[0-9]{4}-[0-9]{4,}$" }
+        },
+        "asset": {
+          "description": "System, service or repository the finding belongs to.",
+          "type": "string"
+        },
+        "exposure": {
+          "description": "How reachable the affected asset is.",
+          "enum": ["internet", "internal", "isolated", "unknown"]
+        },
+        "asset_criticality": {
+          "description": "How important the affected asset is to the organization.",
+          "enum": ["high", "medium", "low", "unknown"]
+        },
+        "known_exploited": {
+          "description": "Whether the vulnerability is known to be exploited in the wild, according to a source you trust. Leave out if unknown.",
+          "type": "boolean"
+        },
+        "metadata": {
+          "description": "Extra string values to carry through to show and export. Not used for prioritization.",
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    }
+  }
+}

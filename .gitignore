@@ -1,0 +1,7 @@
+# Binary from "go build ./cmd/triage"
+/triage
+/triage.exe
+
+# Local workspaces and exports from trying the tool in this checkout
+.triage/
+triage-export.json

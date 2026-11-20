@@ -1,0 +1,45 @@
+{
+  "schema_version": "1",
+  "source": "example-scan",
+  "items": [
+    {
+      "source_id": "SCA-0001",
+      "title": "Log4Shell remote code execution in log4j-core 2.14.1",
+      "severity": "critical",
+      "rule": "dependency-vulnerability",
+      "location": "payments-api/pom.xml",
+      "cves": ["CVE-2021-44228"],
+      "asset": "payments-api",
+      "exposure": "internet",
+      "asset_criticality": "high",
+      "known_exploited": true,
+      "description": "log4j-core 2.14.1 evaluates JNDI lookups in logged strings, which lets an attacker who controls a logged value load remote code.\nUpgrade to 2.17.1 or later.",
+      "metadata": {
+        "package": "org.apache.logging.log4j:log4j-core",
+        "installed_version": "2.14.1",
+        "fixed_version": "2.17.1"
+      }
+    },
+    {
+      "source_id": "SECRETS-0003",
+      "title": "Hard-coded database password in worker configuration",
+      "severity": "high",
+      "rule": "CWE-798",
+      "location": "batch-worker/config/settings.yaml:14",
+      "asset": "batch-worker",
+      "exposure": "internet",
+      "asset_criticality": "medium",
+      "description": "The worker now also runs behind the public API gateway."
+    },
+    {
+      "source_id": "SAST-0310",
+      "title": "Open redirect in login return URL",
+      "severity": "medium",
+      "rule": "CWE-601",
+      "location": "web-frontend/src/auth/callback.ts:57",
+      "asset": "web-frontend",
+      "exposure": "internet",
+      "asset_criticality": "high"
+    }
+  ]
+}
